@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
+import { Loader } from 'components/Loader/Loader';
 import {
   getContacts,
   getContactsFilter,
@@ -16,16 +17,15 @@ export const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
   const contacts = useSelector(getContacts);
   const contactsFilter = useSelector(getContactsFilter);
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(contactsFilter.toLowerCase())
   );
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <Container>
@@ -48,7 +48,7 @@ export const App = () => {
         </NoContactsMessage>
       )}
 
-      {isLoading && !error && <p>Request in progress...</p>}
+      {isLoading && !error && <Loader />}
     </Container>
   );
 };

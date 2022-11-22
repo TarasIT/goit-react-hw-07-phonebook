@@ -12,6 +12,7 @@ export const Item = styled.li`
 `;
 
 export const Contact = styled.p`
+  word-break: break-all;
   font-size: 18px;
 `;
 
