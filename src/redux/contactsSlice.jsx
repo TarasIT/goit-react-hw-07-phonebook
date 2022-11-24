@@ -19,18 +19,6 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
-const fetchContactsWithSuccess = (state, action) => {
-  state.items = action.payload;
-};
-
-const addContactsWithSuccess = (state, action) => {
-  state.items.push(action.payload);
-};
-
-const deleteContacts = (state, action) => {
-  state.items = state.items.filter(({ id }) => id !== action.payload.id);
-};
-
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
@@ -40,9 +28,15 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchContacts.fulfilled, fetchContactsWithSuccess)
-      .addCase(addContact.fulfilled, addContactsWithSuccess)
-      .addCase(deleteContact.fulfilled, deleteContacts)
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.items = action.payload;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.items = state.items.filter(({ id }) => id !== action.payload.id);
+      })
       .addMatcher(getActions('pending'), handlePending)
       .addMatcher(getActions('fulfilled'), handleFulfilled)
       .addMatcher(getActions('rejected'), handleRejected);

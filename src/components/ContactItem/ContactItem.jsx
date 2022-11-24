@@ -3,11 +3,12 @@ import { deleteContact } from 'redux/operations';
 import { filterContacts } from 'redux/filterSlice';
 import { Contact, ContactsDeleteBtn, Item, Number } from './ContactItem.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContactsFilter } from 'redux/selectors';
+import { selectContactsFilter } from 'redux/selectors';
 
 export const ContactItem = ({ name, id, number }) => {
   const dispatch = useDispatch();
-  const filter = useSelector(getContactsFilter);
+  const filter = useSelector(selectContactsFilter);
+
   return (
     <Item>
       <Contact>

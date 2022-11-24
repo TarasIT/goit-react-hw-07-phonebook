@@ -5,23 +5,20 @@ import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { Loader } from 'components/Loader/Loader';
 import {
-  getContacts,
-  getContactsFilter,
-  getError,
-  getIsLoading,
+  selectContacts,
+  selectError,
+  selectIsLoading,
+  selectFilteredContacts,
 } from 'redux/selectors';
 import { Contacts, Container, NoContactsMessage, Title } from './App.styled';
 import { fetchContacts } from 'redux/operations';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  const contacts = useSelector(getContacts);
-  const contactsFilter = useSelector(getContactsFilter);
-  const filteredContacts = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(contactsFilter.toLowerCase())
-  );
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const contacts = useSelector(selectContacts);
+  const filteredContacts = useSelector(selectFilteredContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
